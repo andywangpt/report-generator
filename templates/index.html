@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Word Document</title>
+</head>
+<body>
+    <h1>Upload a Word Document</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <p>{{ form.file.label }} {{ form.file() }}
+            {% if form.file.errors %}
+                <ul class="errors">
+                {% for error in form.file.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    {% if paragraph_content %}
+        <h2>Document Paragraph Content:</h2>
+        <pre>{{ paragraph_content }}</pre>
+    {% endif %}
+
+    {% if table_content %}
+        <h2>Document Table Content:</h2>
+        {% for table in table_content %}
+            <table>
+                {% for row in table %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    {% endif %}
+</body>
+
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.5em;
+    text-align: left;
+}
+</style>
+</html>
